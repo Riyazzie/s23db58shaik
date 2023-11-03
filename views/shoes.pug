@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  - const results = [{shoe_color:"red",shoe_type:"sport",shoe_price:4500},{shoe_color:"black",shoe_type:"classic",shoe_price:5500},{shoe_color:"brown",shoe_type:"loofers",shoe_price:4000}]
+       
+
+  .container-fluid
+    .row
+      each shoe,index in results
+        div(class="col-sm-2" onclick=`buy(${index})`)       
+          h3 #{shoe.shoe_type}
+          p shoe Color #{shoe.shoe_color}
+          p shoe price: $#{shoe.shoe_price}
+        
+  script.
+    function buy(index) {
+        alert(`You purchased : ${index}`)
+    }
