@@ -6,9 +6,11 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var shoeRouter = require('./routes/shoe');
+var shoesRouter = require('./routes/shoes');
 var boardRouter = require('./routes/board');
 var chooseRouter = require('./routes/choose');
+var shoes = require('./models/shoes');
+var resourceRouter = require('./routes/resource');
 
 var app = express();
 
@@ -24,9 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/shoe', shoeRouter);
+app.use('/shoes', shoesRouter);
 app.use('/board', boardRouter);
 app.use('/choose', chooseRouter);
+app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,5 +46,48 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+require('dotenv').config();
+const connectionString = process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString);
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")})
+
+async function recreateDB(){
+  // Delete everything
+  //await shoes.deleteMany();
+  await shoes.deleteMany({});
+  let instance1 = new 
+  shoes({"shoes_color": 'red', "shoes_type": 'sport', "shoes_price": 4500});
+  await instance1.save();
+  //instance1.save( function(err,doc) {
+  //if(err) return console.error(err);
+  console.log("First object saved")
+  //});
+ 
+  let instance2 = new 
+  shoes({"shoes_color": 'black', "shoes_type": 'classic', "shoes_price": 5500});
+  await instance2.save();
+  //instance1.save( function(err,doc) {
+  //if(err) return console.error(err);
+  console.log("second object saved")
+  //});
+ 
+  let instance3 = new
+  shoes({"shoes_color": 'brown', "shoes_type": 'loofers', "shoes_price": 4000});
+  await instance3.save();
+  //instance1.save( function(err,doc) {
+  //if(err) return console.error(err);
+  console.log("Third object saved")
+  //});
+ }
+ let reseed = true;
+ if (reseed) {recreateDB();}
 
 module.exports = app;

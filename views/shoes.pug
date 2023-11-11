@@ -2,16 +2,16 @@ extends layout
 
 block content
   h1= title
-  - const results = [{shoe_color:"red",shoe_type:"sport",shoe_price:4500},{shoe_color:"black",shoe_type:"classic",shoe_price:5500},{shoe_color:"brown",shoe_type:"loofers",shoe_price:4000}]
+  - const results = [{shoes_color:"red",shoes_type:"sport",shoes_price:4500},{shoes_color:"black",shoes_type:"classic",shoes_price:5500},{shoes_color:"brown",shoes_type:"loofers",shoes_price:4000}]
        
 
   .container-fluid
     .row
-      each shoe,index in results
+      each shoes,index in results
         div(class="col-sm-2" onclick=`buy(${index})`)       
-          h3 #{shoe.shoe_type}
-          p shoe Color #{shoe.shoe_color}
-          p shoe price: $#{shoe.shoe_price}
+          h3 #{shoes.shoes_type}
+          p shoes Color #{shoes.shoes_color}
+          p shoes price: $#{shoes.shoes_price}
         
   script.
     function buy(index) {
