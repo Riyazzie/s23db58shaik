@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  h1= title
+  form(id='shoesForm', action="/resource/shoes", method="POST")
+    div.form-group
+      label.shoesAttr(for='shoes_colour') shoes colour
+      input#shoes_colour(type='text', name='shoes_colour')
+    div.form-group
+      label.shoesAttr(for='shoes_type') shoes type
+      input#shoes_type(type='text', name='shoes_type')
+    div.form-group
+      label.shoesAttr(for='shoes_price') shoes price
+      input#shoes_price(type='number', name='shoes_price')
+    input(type="submit")
+  script.
+    document.forms['shoesForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show the user that the form is being submitted
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Save succeeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Save failed " + error)
+      });
+    });

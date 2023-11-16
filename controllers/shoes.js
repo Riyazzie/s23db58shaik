@@ -93,3 +93,68 @@ exports.shoes_create_post = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
 };
+
+    // Handle shoes delete on DELETE.
+    exports.shoes_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await shoes.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+    };
+    // Handle a show one view with id specified by query
+exports.shoes_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await shoes.findById( req.query.id)
+    res.render('shoesdetail',
+    { title: 'shoes Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+    // Handle building the view for creating a shoes.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.shoes_create_Page = function(req, res) {
+console.log("create view")
+try{
+res.render('shoescreate', { title: 'shoes Create'});
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
+}
+};
+// Handle building the view for updating a shoes.
+// query provides the id
+exports.shoes_update_Page = async function(req, res) {
+    console.log("update view for item "+req.query.id)
+    try{
+    let result = await shoes.findById(req.query.id)
+    res.render('shoesupdate', { title: 'shoes Update', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+    // Handle a delete one view with id from query
+exports.shoes_delete_Page = async function(req, res) {
+console.log("Delete view for id " + req.query.id)
+try{
+result = await shoes.findById(req.query.id)
+res.render('shoesdelete', { title: 'shoes Delete', toShow:
+result });
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
+}
+};

@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  - let shoesid = toShow._id
+  - let shoes_color = toShow.shoes_color
+  - let shoes_type = toShow.shoes_type
+  - let shoes_price = toShow.shoes_price
+
+  div
+    div.row
+      div(class='shoesAttr mr-3') shoes ID is:
+      div #{shoesid}
+    div.row
+      div(class='shoesAttr mr-3') shoes colour is:
+      div #{shoes_color}
+    div.row
+      div(class='shoesAttr mr-3') shoes type is:
+      div #{shoes_type}
+    div.row
+      div(class='shoesAttr mr-3') shoes price is:
+      div #{shoes_price}
