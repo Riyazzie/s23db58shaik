@@ -1,19 +1,17 @@
 extends layout
-
 block content
-  h1= title
-  - const results = [{shoes_color:"red",shoes_type:"sport",shoes_price:4500},{shoes_color:"black",shoes_type:"classic",shoes_price:5500},{shoes_color:"brown",shoes_type:"loofers",shoes_price:4000}]
-       
-
-  .container-fluid
-    .row
-      each shoes,index in results
-        div(class="col-sm-2" onclick=`buy(${index})`)       
-          h3 #{shoes.shoes_type}
-          p shoes Color #{shoes.shoes_color}
-          p shoes price: $#{shoes.shoes_price}
-        
-  script.
-    function buy(index) {
-        alert(`You purchased : ${index}`)
-    }
+ h1= title
+ - let items = results;
+   each item in items
+    - let destination = `dispatch("/shoes/update?id=${item._id}")`
+      div
+       p shoes_color  - #{item.shoes_color}
+       p shoes_type  - #{item.shoes_type}       
+       p shoes_price - #{item.shoes_price}
+       button.btn( class="btn-primary ml-1", onclick= destination) Update
+       br
+       br
+ script.
+  function dispatch(path){
+   window.location.href=path
+  }
