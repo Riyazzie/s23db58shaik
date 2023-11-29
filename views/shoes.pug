@@ -1,17 +1,47 @@
+//- extends layout
+//- block content
+//-  h1= title
+//-  - let items = results;
+//-    each item in items
+//-     - let destination = `dispatch("/shoes/update?id=${item._id}")`
+//-       div
+//-        p shoes_color  - #{item.shoes_color}
+//-        p shoes_type  - #{item.shoes_type}       
+//-        p shoes_price - #{item.shoes_price}
+//-        button.btn( class="btn-primary ml-1", onclick= destination) Update
+//-        br
+//-        br
+//-  script.
+//-   function dispatch(path){
+//-    window.location.href=path
+//-   }
+//- Assuming you have a similar structure for your delete route
+//- Adjust the route and parameters as needed
+
 extends layout
+
 block content
- h1= title
- - let items = results;
-   each item in items
-    - let destination = `dispatch("/shoes/update?id=${item._id}")`
-      div
-       p shoes_color  - #{item.shoes_color}
-       p shoes_type  - #{item.shoes_type}       
-       p shoes_price - #{item.shoes_price}
-       button.btn( class="btn-primary ml-1", onclick= destination) Update
-       br
-       br
- script.
-  function dispatch(path){
-   window.location.href=path
-  }
+  h1= title
+
+  a.btn.btn-primary(href="/shoes/create") Create Motor
+
+  - let items = results;
+  each item in items
+    - let updateShoecount = `dispatch("/shoes/update?id=${item._id}")`
+    - let getShoedetails = `dispatch("/shoes/detail?id=${item._id}")`
+    - let deleteShoe = `dispatch("/shoes/delete?id=${item._id}")`
+
+    div
+      p shoes_color - #{item.shoes_color}
+      p shoes_type - #{item.shoes_type}
+      p shoes_price - #{item.shoes_price}
+      button.btn.btn-primary.ml-1(onclick=updateShoecount) Update
+      button.btn.btn-secondary.ml-1(onclick=getShoedetails) Detail
+      button.btn.btn-danger.ml-1(onclick=deleteShoe) Delete
+      br
+      br
+
+  script.
+    function dispatch(path){
+      window.location.href = path;
+    }
