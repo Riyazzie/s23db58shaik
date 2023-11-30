@@ -13,7 +13,7 @@ router.get('/', shoes_controlers.shoes_view_all_Page );
 /* GET detail shoes page */
 router.get('/detail', shoes_controlers.shoes_view_one_Page);
 /* GET create shoes page */
-router.get('/create', shoes_controlers.shoes_create_Page);
+router.get('/create',secured, shoes_controlers.shoes_create_Page);
 const secured = (req, res, next) => {
   if (req.user){
   return next();
@@ -27,7 +27,7 @@ const secured = (req, res, next) => {
 /* GET create update page */
 //router.get('/update', shoes_controlers.shoes_update_Page);
 /* GET delete shoes page */
-router.get('/delete', shoes_controlers.shoes_delete_Page);
+router.get('/delete',secured, shoes_controlers.shoes_delete_Page);
 
 
 module.exports = router;
